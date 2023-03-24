@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bitcoin Price{% endblock %}
+
+{% block body %}
+    <h1>Bitcoin Price</h1>
+    <p>USD: <span id="usd">{{ usd }}</span></p>
+    <p>EUR: <span id="eur">{{ eur }}</span></p>
+    <p>Next update in <span id="timer">20</span> seconds</p>
+
+    <script>
+        let updateTimerLength = 20; // Refresh every 20 seconds
+        let remainingSeconds = updateTimerLength;
+        const timerElement = document.getElementById('timer');
+
+        function updateTimer() {
+            remainingSeconds--;
+            timerElement.innerText = remainingSeconds;
+            if (remainingSeconds === 0) {
+                refreshBitcoinPrice();
+                remainingSeconds = updateTimerLength;
+            }
+        }
+
+        function refreshBitcoinPrice() {
+            fetch('/bitcoin-price')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('usd').innerText = data.usd;
+                    document.getElementById('eur').innerText = data.eur;
+                });
+        }
+
+        setInterval(updateTimer, 1000); // Update timer every 1 second
+    </script>
+{% endblock %}

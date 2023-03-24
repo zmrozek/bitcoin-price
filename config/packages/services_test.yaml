@@ -1,0 +1,6 @@
+services:
+    _defaults:
+        public: true
+
+    App\Service\BitcoinPriceServiceInterface:
+        class: App\Tests\Service\MockBitcoinPriceService
