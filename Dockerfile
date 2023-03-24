@@ -20,13 +20,3 @@ COPY ./docker/apache/symfony.conf /etc/apache2/sites-available/000-default.conf
 
 # Nastavení pracovního adresáře
 WORKDIR /var/www/html
-
-# Nainstalujte Symfony a závislosti projektu
-COPY composer.json composer.lock ./
-RUN composer install --no-scripts --no-autoloader --no-progress --no-interaction
-
-# Kopírujte zdrojové soubory projektu
-COPY . .
-
-# Vygenerujte autoloader a optimalizujte závislosti
-RUN composer dump-autoload --optimize --no-dev --classmap-authoritative
