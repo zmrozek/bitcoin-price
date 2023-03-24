@@ -19,8 +19,8 @@ class BitcoinControllerTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Bitcoin Price');
-        self::assertSelectorTextContains('.usd', '30000');
-        self::assertSelectorTextContains('.eur', '25000');
+        self::assertSelectorTextContains('#usd', '30000');
+        self::assertSelectorTextContains('#eur', '25000');
     }
 
     public function testGetBitcoinPriceJson(): void

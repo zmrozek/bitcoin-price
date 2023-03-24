@@ -32,7 +32,7 @@ class BitcoinController extends AbstractController
             ]);
         }
 
-        return $this->render('index.html.twig', [
+        return $this->render('bitcoin\index.html.twig', [
             'usd' => $bitcoinPrices->getUsdPrice(),
             'eur' => $bitcoinPrices->getEurPrice(),
         ]);

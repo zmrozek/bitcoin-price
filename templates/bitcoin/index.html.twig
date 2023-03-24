@@ -6,24 +6,28 @@
     <h1>Bitcoin Price</h1>
     <p>USD: <span id="usd">{{ usd }}</span></p>
     <p>EUR: <span id="eur">{{ eur }}</span></p>
-    <p>Next update in <span id="timer">20</span> seconds</p>
+    <p>Next update in: <span id="timer">60 seconds</span></p>
 
     <script>
-        let updateTimerLength = 20; // Refresh every 20 seconds
+        let updateTimerLength = 60; // Refresh every 60 seconds
         let remainingSeconds = updateTimerLength;
         const timerElement = document.getElementById('timer');
 
-        function updateTimer() {
-            remainingSeconds--;
-            timerElement.innerText = remainingSeconds;
+        async function updateTimer() {
             if (remainingSeconds === 0) {
-                refreshBitcoinPrice();
+                remainingSeconds--; //
+                timerElement.innerText = 'updating...';
+                await refreshBitcoinPrice();
                 remainingSeconds = updateTimerLength;
+                timerElement.innerText = remainingSeconds + ' seconds';
+            } else if (remainingSeconds > 0) {
+                remainingSeconds--;
+                timerElement.innerText = remainingSeconds + ' seconds';
             }
         }
 
         function refreshBitcoinPrice() {
-            fetch('/bitcoin-price')
+            return fetch('/bitcoin-price')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('usd').innerText = data.usd;
